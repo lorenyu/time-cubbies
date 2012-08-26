@@ -1,0 +1,34 @@
+extends page
+
+block prepend nav
+  activeItem = 'buckets'
+  loggedIn = true
+
+block containerContents
+  .page-header
+    h1 Manage Cubbies 
+      small Start small, think big.
+  .btn-toolbar
+    .btn-group
+      a.add-bucket.btn
+        i.icon-plus
+        |  Add Cubby
+  .status-msg!= statusMsg
+  .buckets
+    - for (var i = 0; i < buckets.length / 4; i++)
+      .row
+        for bucket in buckets.slice(4*i, 4*i + 4)
+          .span3
+            if editingBuckets[bucket.id]
+              include ../components/buckets/edit-bucket
+            else
+              .bucket(bucketId=bucket.id)
+                .well
+                  .btn-toolbar
+                    .delete.btn.pull-right
+                      i.icon-remove
+                    .edit.btn.pull-right
+                      i.icon-pencil
+                  h3.name= bucket.name
+                  h4
+                    small.description= bucket.description

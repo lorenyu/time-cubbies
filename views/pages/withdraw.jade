@@ -1,0 +1,24 @@
+extends page
+
+block prepend nav
+  activeItem = 'withdraw'
+  loggedIn = true
+
+block containerContents
+  .page-header
+    h1 Spend Money 
+      small Choose wisely.
+  .row
+    .span3
+      form.withdraw-form
+        p.withdraw-amount.lead $
+          span.amount= withdrawAmount
+          |  
+          button.btn(type='submit') Spend
+    .span3
+      p.allocated.lead $
+        span.amount= user.allocatedAmount
+        |  Available
+  .row
+    for bucket in buckets
+      include ../components/buckets/bucket

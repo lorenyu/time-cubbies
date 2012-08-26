@@ -1,0 +1,35 @@
+extends page
+
+block prepend nav
+  activeItem = 'home'
+  loggedIn = true
+
+block containerContents
+  .page-header
+    h1 Home 
+      small It's where the heart is.
+  .row
+    .span2
+      p.lead $#{user.amount} Total
+    .span2
+      p.lead $#{user.allocatedAmount} Allocated
+    .span2
+      p.lead $#{user.unallocatedAmount} Unallocated
+  if buckets.length <= 0
+    .row
+      .span12
+        .alert.alert-info.alert-block
+          button.close(data-dismiss='alert') &times;
+          h3.alert-heading Welcome
+          p This is your home, where you get a quick summary of the money in your cubbies. You don't have any cubbies yet, so let's start by adding some in the 
+            a.btn(href='#buckets') Manage Cubbies
+            |  section.
+  - for (var i = 0; i < buckets.length / 4; i++)
+    .row
+      for bucket in buckets.slice(4*i, 4*i + 4)
+        .bucket.span3(bucketId=bucket.id)
+          .well
+            h3.name= bucket.name + ' '
+            p.amount.lead $#{bucket.amount}
+            h4
+              small.description= bucket.description
